@@ -1227,6 +1227,7 @@ StateListener<State, VirtualMachine.Event, VirtualMachine> {
             // be reused.
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (plan.getPoolId() != null || (toBeCreated.getVolumeType() == Volume.Type.DATADISK && toBeCreated.getPoolId() != null && toBeCreated.getState() == Volume.State.Ready)) {
 =======
             if (plan.getPoolId() != null || (toBeCreated.getPoolId() != null && toBeCreated.getState() == Volume.State.Ready)) {
@@ -1234,6 +1235,9 @@ StateListener<State, VirtualMachine.Event, VirtualMachine> {
 =======
             if (plan.getPoolId() != null) {
 >>>>>>> a8e330a... Bug-Id: CS-29612: System Vm volumes are not getting recreated after upgrade. Regression due to CS-27160 Reviewed-By: Damoder
+=======
+            if (plan.getPoolId() != null || (toBeCreated.getVolumeType() == Volume.Type.DATADISK && toBeCreated.getPoolId() != null && toBeCreated.getState() == Volume.State.Ready)) {
+>>>>>>> 39fa878... Bug-ID:  CS-27160 Restore VM (Re-install VM) with enable.storage.migration set to false fails, later fails to start up VM too
                 s_logger.debug("Volume has pool already allocated, checking if pool can be reused, poolId: " + toBeCreated.getPoolId());
                 List<StoragePool> suitablePools = new ArrayList<StoragePool>();
                 StoragePool pool = null;
