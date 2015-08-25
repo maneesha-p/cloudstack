@@ -52,14 +52,9 @@ import org.apache.cloudstack.utils.qemu.QemuImg.PhysicalDiskFormat;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.libvirt.Connect;
-import org.libvirt.Domain;
-import org.libvirt.DomainBlockStats;
-import org.libvirt.DomainInfo;
+import org.libvirt.*;
 import org.libvirt.DomainInfo.DomainState;
-import org.libvirt.DomainInterfaceStats;
-import org.libvirt.LibvirtException;
-import org.libvirt.NodeInfo;
+import org.libvirt.jna.virDomainMemoryStats;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.Command;
@@ -2944,6 +2939,9 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         long _ioWrote;
         long _bytesRead;
         long _bytesWrote;
+        long _intmemfree;
+        long _memory;
+        long _maxmemory;
         Calendar _timestamp;
     }
 
@@ -2952,11 +2950,16 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         try {
             dm = getDomain(conn, vmName);
             final DomainInfo info = dm.getInfo();
+            final MemoryStatistic[] mems = dm.memoryStats(2);
 
             final VmStatsEntry stats = new VmStatsEntry();
+
             stats.setNumCPUs(info.nrVirtCpu);
             stats.setEntityType("vm");
 
+            stats.setMemoryKBs(info.maxMem);
+            stats.setTargetMemoryKBs(info.memory);
+            stats.setIntFreeMemoryKBs((double) mems[0].getValue());
             /* get cpu utilization */
             VmStats oldStats = null;
 
@@ -3041,6 +3044,9 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
             newStat._bytesRead = bytes_rd;
             newStat._bytesWrote = bytes_wr;
             newStat._timestamp = now;
+            newStat._intmemfree = mems[0].getValue();
+            newStat._memory = info.memory;
+            newStat._maxmemory = info.maxMem;
             _vmStats.put(vmName, newStat);
             return stats;
         } finally {
