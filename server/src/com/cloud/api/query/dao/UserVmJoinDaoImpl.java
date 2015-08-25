@@ -212,11 +212,17 @@ public class UserVmJoinDaoImpl extends GenericDaoBase<UserVmJoinVO, Long> implem
                 if ((userVm.getHypervisorType() != null) && (userVm.getHypervisorType().equals(HypervisorType.KVM) || userVm.getHypervisorType().equals(HypervisorType.XenServer))) { // support KVM and XenServer only util 2013.06.25
                     userVmResponse.setDiskKbsRead((long)vmStats.getDiskReadKBs());
 
-                    userVmResponse.setDiskKbsWrite((long)vmStats.getDiskWriteKBs());
+                    userVmResponse.setDiskKbsWrite((long) vmStats.getDiskWriteKBs());
 
-                    userVmResponse.setDiskIORead((long)vmStats.getDiskReadIOs());
+                    userVmResponse.setDiskIORead((long) vmStats.getDiskReadIOs());
 
-                    userVmResponse.setDiskIOWrite((long)vmStats.getDiskWriteIOs());
+                    userVmResponse.setDiskIOWrite((long) vmStats.getDiskWriteIOs());
+
+                    userVmResponse.setMemoryKBs((long) vmStats.getMemoryKBs());
+
+                    userVmResponse.setMemoryIntFreeKBs((long) vmStats.getIntFreeMemoryKBs());
+
+                    userVmResponse.setMemoryTargetKBs((long) vmStats.getTargetMemoryKBs());
                 }
             }
         }

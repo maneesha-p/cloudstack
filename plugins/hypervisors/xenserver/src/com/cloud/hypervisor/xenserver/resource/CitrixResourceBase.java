@@ -3348,7 +3348,14 @@ public abstract class CitrixResourceBase implements ServerResource, HypervisorRe
                     vmStatsAnswer.setDiskReadKBs(vmStatsAnswer.getDiskReadKBs() + getDataAverage(dataNode, col, numRows) / 1000);
                 } else if (param.matches("vbd_.*_write")) {
                     vmStatsAnswer.setDiskWriteKBs(vmStatsAnswer.getDiskWriteKBs() + getDataAverage(dataNode, col, numRows) / 1000);
+                } else if (param.contains("memory_internal_free")) {
+                    vmStatsAnswer.setIntFreeMemoryKBs(vmStatsAnswer.getIntFreeMemoryKBs() + getDataAverage(dataNode, col, numRows) / 1000);
+                } else if (param.contains("memory_target")) {
+                    vmStatsAnswer.setTargetMemoryKBs(vmStatsAnswer.getTargetMemoryKBs() + getDataAverage(dataNode, col, numRows) / 1000);
+                } else if (param.contains("memory")) {
+                    vmStatsAnswer.setMemoryKBs(vmStatsAnswer.getMemoryKBs() + getDataAverage(dataNode, col, numRows) / 1000);
                 }
+
             }
         }
 
@@ -3364,6 +3371,8 @@ public abstract class CitrixResourceBase implements ServerResource, HypervisorRe
                 s_logger.debug("Vm cpu utilization " + vmStatsAnswer.getCPUUtilization());
             }
         }
+
+        s_logger.warn(vmResponseMap.get(vmUUIDs.get(0)));
         return vmResponseMap;
     }
 
