@@ -2980,9 +2980,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
             dm = getDomain(conn, vmName);
             final DomainInfo info = dm.getInfo();
             final MemoryStatistic[] mems = dm.memoryStats(2);
-            s_logger.info("Manu!!!!" + mems[0].getValue());
 
-            s_logger.info("ME!!! " + info.memory +"!!"+info.maxMem);
             final VmStatsEntry stats = new VmStatsEntry();
 
             stats.setNumCPUs(info.nrVirtCpu);

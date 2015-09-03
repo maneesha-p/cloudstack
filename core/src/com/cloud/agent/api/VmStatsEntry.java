@@ -39,7 +39,10 @@ public class VmStatsEntry implements VmStats {
     public VmStatsEntry() {
     }
 
-    public VmStatsEntry(double cpuUtilization, double networkReadKBs, double networkWriteKBs, int numCPUs, String entityType) {
+    public VmStatsEntry(double memoryKBs,double intfreememoryKBs,double targetmemoryKBs, double cpuUtilization, double networkReadKBs, double networkWriteKBs, int numCPUs, String entityType) {
+        this.memoryKBs = memoryKBs;
+        this.intfreememoryKBs = intfreememoryKBs;
+        this.targetmemoryKBs = targetmemoryKBs;
         this.cpuUtilization = cpuUtilization;
         this.networkReadKBs = networkReadKBs;
         this.networkWriteKBs = networkWriteKBs;
